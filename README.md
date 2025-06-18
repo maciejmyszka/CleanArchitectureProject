@@ -2,6 +2,14 @@
 
 The project was generated using the [Clean.Architecture.Solution.Template](https://github.com/jasontaylordev/CleanArchitecture) version 9.0.10.
 
+There are 2 accounts added with different roles - admin and user.
+
+username: admin@localhost
+password: Admin1!
+
+username: user@localhost
+password: User1!
+
 ## Build
 
 Run `dotnet build -tl` to build the solution.
