@@ -1,0 +1,17 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@functions {
+    public IActionResult OnGet()
+    {
+        if (SignInManager.IsSignedIn(User))
+        {
+            return RedirectToPage("/GrpcClient");
+        }
+        else
+        {
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
+    }
+}

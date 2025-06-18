@@ -1,0 +1,46 @@
+﻿@page
+@model GrpcClientModel
+
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    ViewData["Title"] = "gRPC Client";
+
+    bool isSignedIn = SignInManager.IsSignedIn(User);
+    bool isAdmin = false;
+
+    if (isSignedIn)
+    {
+        var user = await UserManager.GetUserAsync(User);
+        isAdmin = user != null && await UserManager.IsInRoleAsync(user, "Admin");
+    }
+}
+
+@if (!isSignedIn)
+{
+    <h1>Brak dostępu</h1>
+    <p>Musisz być zalogowany, aby korzystać z tego modułu.</p>
+}
+else if (!isAdmin)
+{
+    <h1>Brak dostępu</h1>
+    <p>Musisz posiadać rolę <strong>Admin</strong>, aby korzystać z tego modułu.</p>
+}
+else
+{
+    <h1>@ViewData["Title"]</h1>
+
+    <form method="post">
+        <label for="Input">Wpisz coś:</label>
+        <input type="text" name="Input" value="@Model.Input" />
+        <button type="submit">Wywołaj gRPC</button>
+    </form>
+
+    @if (Model.Output != null)
+    {
+        <h2>Odpowiedź z gRPC:</h2>
+        <p>@Model.Output</p>
+    }
+}
